@@ -1,0 +1,32 @@
+// Include the built-in Servo library to control the motor
+#include <Servo.h>
+
+// Create a "Servo" object called myServo to control our physical motor
+Servo myServo;
+
+int potPin = A0;   // Pin connected to the middle leg of the potentiometer
+int servoPin = 9;  // Pin connected to the signal wire (usually yellow/orange) of the servo
+
+int potValue = 0;  // Variable to store the raw reading from the potentiometer
+int angle = 0;     // Variable to store the mapped angle (0 to 180) for the servo
+
+void setup() {
+  // Tell the Arduino that our servo is connected to pin 9
+  myServo.attach(servoPin);
+}
+
+void loop() {
+  // 1. Read the potentiometer value (Remember, this is an input, so it's 0 to 1023!)
+  potValue = analogRead(potPin);
+
+  // 2. Translate (map) that value to an angle the servo understands
+  // map(value, fromLow, fromHigh, toLow, toHigh)
+  // We map the pot's 0-1023 range into the servo's 0-180 degree range
+  angle = map(potValue, 0, 1023, 0, 180);
+
+  // 3. Command the servo to move to that specific angle
+  myServo.write(angle);
+
+  // 4. Wait a tiny bit (15 milliseconds) for the servo to reach the position
+  delay(15);
+}

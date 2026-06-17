@@ -1,0 +1,37 @@
+int potPin = A0;    // Pin connected to the middle leg of the potentiometer
+int ledPin = 9;     // Pin connected to the LED (must have a ~ symbol for PWM)
+
+int potValue = 0;   // Variable to store the raw reading from the potentiometer
+int brightness = 0; // Variable to store the mapped brightness (0 to 255)
+
+void setup() {
+  // Set the LED pin as an output so we can send power to it
+  pinMode(ledPin, OUTPUT); 
+  
+  // Start the Serial Monitor so we can see the numbers changing
+  Serial.begin(9600);      
+}
+
+void loop() {
+  // 1. Read the potentiometer value (Range is 0 to 1023)
+  potValue = analogRead(potPin);
+
+  // 2. Translate (map) that value to a brightness level
+  // We map the pot's input (0-1023) into the LED's PWM output (0-255)
+  brightness = map(potValue, 0, 1023, 0, 255);
+
+  // Note: Because 1024 divided by 4 is exactly 256, you could also 
+  // just do this: brightness = potValue / 4; 
+
+  // 3. Command the LED to light up at that specific brightness
+  analogWrite(ledPin, brightness);
+
+  // 4. Print the values to the Serial Monitor so we can watch them change
+  Serial.print("Pot Input: ");
+  Serial.print(potValue);
+  Serial.print("  --->  LED PWM: ");
+  Serial.println(brightness);
+
+  // 5. Wait a tiny bit (10 milliseconds) before reading the knob again
+  delay(10);
+}

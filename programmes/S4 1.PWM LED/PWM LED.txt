@@ -1,0 +1,33 @@
+int ledPin = 9; // Must be a PWM pin (look for the ~ symbol on your board)
+
+void setup() {
+  pinMode(ledPin, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  // 0 = OFF (Fully dark)
+  analogWrite(ledPin, 0);
+  Serial.println("0");
+  delay(2000); 
+
+  // 64 = DIM (Faint glow)
+  analogWrite(ledPin, 64);
+  Serial.println("64");
+  delay(2000); 
+
+  // 128 = HALF (Medium brightness)
+  analogWrite(ledPin, 128);
+  Serial.println("128");
+  delay(2000); 
+
+  // 192 = BRIGHT (Strong glow)
+  analogWrite(ledPin, 192);
+  Serial.println("192");
+  delay(2000); 
+
+  // 255 = MAX (Full brightness)
+  analogWrite(ledPin, 255);
+  Serial.println("255");
+  delay(2000); 
+}
