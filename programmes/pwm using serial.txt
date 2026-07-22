@@ -1,0 +1,28 @@
+// 1. Tell the Arduino which pin connects to the LED
+const int ledPin = 3; 
+
+void setup() {
+  // 2. Open the communication channel to the computer
+  Serial.begin(9600);
+  
+  // 3. Configure the LED pin to send out power
+  pinMode(ledPin, OUTPUT);
+}
+
+void loop() {
+  // 4. Check if the user has typed anything into the computer
+  if (Serial.available() > 0) {
+    
+    // 5. Read the full number entered by the user
+    int brightness = Serial.parseInt();
+    // If brightness is over 255, force it to stay at 255
+	brightness = constrain(brightness, 0, 255); 
+
+    // 6. Send that exact number to change the LED brightness
+    analogWrite(ledPin, brightness);
+    
+    // 7. Print feedback so the user knows the Arduino received it
+    Serial.print("Setting brightness to: ");
+    Serial.println(brightness);
+  }
+}
